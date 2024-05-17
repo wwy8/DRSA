@@ -12,13 +12,12 @@ if __name__ == '__main__':
     torch.manual_seed(fix_seed)
     np.random.seed(fix_seed)
 
-    parser = argparse.ArgumentParser(description='TimesNet')
+    parser = argparse.ArgumentParser(description='DRSA')
 
     # basic config
     parser.add_argument('--is_training', type=int, required=True, default=0, help='status')
     parser.add_argument('--model_id', type=str, required=True, default='ETTh1_96_96', help='model id')
-    parser.add_argument('--model', type=str, required=True, default='TimesNet',
-                        help='model name, options: [Autoformer, ETSformer, TimesNet]')
+    parser.add_argument('--model', type=str, required=True, default='DRSA', help='model name')
 
     # data loader
     parser.add_argument('--data', type=str, required=True, default='ETTh1', help='dataset type')
@@ -38,20 +37,17 @@ if __name__ == '__main__':
     parser.add_argument('--seasonal_patterns', type=str, default='Monthly', help='subset for M4')
 
     # model define
-    parser.add_argument('--top_k', type=int, default=5, help='for TimesBlock')
+    parser.add_argument('--top_k', type=int, default=5, help='for TimesNET')
     parser.add_argument('--att_topk', type=int, default=5, help='for DRF')
     parser.add_argument('--n_win', type=int, default=8, help='Number of blocks divided by DRF')
-    # parser.add_argument('--n_win', type=int, default=98, help='Number of blocks divided by attBlock')
     parser.add_argument('--n_heads', type=int, default=8, help='num of heads')
     parser.add_argument('--num_kernels', type=int, default=4, help='for Inception')
     parser.add_argument('--enc_in', type=int, default=7, help='encoder input size')
     parser.add_argument('--dec_in', type=int, default=7, help='decoder input size')
     parser.add_argument('--c_out', type=int, default=7, help='output size')
-    # parser.add_argument('--d_model', type=int, default=512, help='dimension of model')
     parser.add_argument('--d_model', type=int, default=64, help='dimension of model')
     parser.add_argument('--e_layers', type=int, default=2, help='num of encoder layers')
     parser.add_argument('--d_layers', type=int, default=1, help='num of decoder lay ers')
-    # parser.add_argument('--d_ff', type=int, default=2048, help='dimension of fcn')
     parser.add_argument('--d_ff', type=int, default=64, help='dimension of fcn')
     parser.add_argument('--moving_avg', type=int, default=25, help='window size of moving average')
     parser.add_argument('--factor', type=int, default=3, help='attn factor')
@@ -65,7 +61,6 @@ if __name__ == '__main__':
     parser.add_argument('--output_attention', action='store_true', help='whether to output attention in ecoder')
 
     # optimization
-    # parser.add_argument('--num_workers', type=int, default=10, help='data loader num workers')
     parser.add_argument('--num_workers', type=int, default=0, help='data loader num workers')
     parser.add_argument('--itr', type=int, default=1, help='experiments times')
     parser.add_argument('--train_epochs', type=int, default=10, help='train epochs')
